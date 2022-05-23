@@ -43,7 +43,9 @@ jobs:
       - name: run pre-commit hooks
         run: poetry run pre-commit run --all-file
       - name: run pytest
-        run: poetry run pytest
+        run: |
+          python -c "import nltk;nltk.download('stopwords')"
+          poetry run pytest
       - name: Archive artifacts
         uses: actions/upload-artifact@v3
         with:
