@@ -11,7 +11,7 @@ from starlette_context.middleware import RawContextMiddleware
 
 from app.api import router
 
-API_PORT = 8082
+API_PORT = 8080
 ROOT_PATH = os.getenv("ROOT_PATH", "")
 API_KEY = os.getenv("API_KEY")
 API_KEY_NAME = "X-API-KEY"
