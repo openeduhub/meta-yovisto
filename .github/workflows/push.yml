@@ -1,0 +1,26 @@
+name: Yovisto push actions
+
+on:
+  push:
+    branches:
+      - "**"
+
+env:
+  docker_repository: "docker.edu-sharing.com"
+  path_prefix: "/projects/oeh-redaktion/edusharing-projects-oeh-redaktion-yovisto-"
+  image_tag: "dev"
+  image_name: "topics"
+
+
+jobs:
+  build-and-push:
+    name: Build and Push Yovisto topics image to community edu hub
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Log in to edu sharing
+        run: docker login ${{env.docker_repository}} -u ${{ secrets.DOCKER_EDU_HUB_REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_EDU_HUB_REGISTRY_PASSWORD }}
+      - name: Build
+        run: docker build -t ${{env.docker_repository}}${{env.path_prefix}}${{env.image_name}}:${{env.image_tag}} .
+      - name: Push
+        run: docker push ${{env.docker_repository}}${{env.path_prefix}}${{env.image_name}}:${{env.image_tag}}

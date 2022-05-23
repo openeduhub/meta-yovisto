@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "meta-yovisto"
+version = "0.1.0"
+description = ""
+authors = ["Robert Meissner <robert.meissner@codecentric.de>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.78.0"
+starlette-context = "^0.3.3"
+python-dotenv = "^0.20.0"
+rdflib = "^6.1.1"
+nltk = "^3.7"
+treelib = "^1.6.1"
+uvicorn = "^0.17.6"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
