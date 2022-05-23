@@ -39,7 +39,6 @@ jobs:
       - name: build artifact and install
         run: |
           poetry env use 3.9
-          poetry build
           poetry install
       - name: run pre-commit hooks
         run: poetry run pre-commit run --all-file
