@@ -1,30 +1,25 @@
 import logging
+import os
 
 from dotenv import load_dotenv
 from fastapi import FastAPI
-import os
-
 from fastapi.routing import APIRoute
 from starlette.datastructures import CommaSeparatedStrings
 from starlette.middleware.cors import CORSMiddleware
 from starlette_context.middleware import RawContextMiddleware
 
-from app.api import router
+from api import router
 
 API_PORT = 8080
 ROOT_PATH = os.getenv("ROOT_PATH", "")
-API_KEY = os.getenv("API_KEY")
-API_KEY_NAME = "X-API-KEY"
 API_DEBUG = True
 ALLOWED_HOSTS = CommaSeparatedStrings(os.getenv("ALLOWED_HOSTS", "*"))
-LOG_LEVEL = os.getenv("LOG_LEVEL", "debug")
+LOG_LEVEL = os.getenv("LOG_LEVEL")
 OPEN_API_VERSION = "2.1.0"
-
 logger = logging.getLogger(f"{os.getenv('LOGGER', 'gunicorn')}.error")
 
 
 def api() -> FastAPI:
-    print("api")
     _api = FastAPI(
         root_path=ROOT_PATH,
         title="Meta Yovisto API",
@@ -56,7 +51,6 @@ app = CORSMiddleware(
 )
 
 print(app)
-
 if __name__ == "__main__":
     import os
 

@@ -1,4 +1,3 @@
-import nltk
 from fastapi import APIRouter
 from pydantic import BaseModel
 from starlette.status import HTTP_200_OK
