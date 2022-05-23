@@ -10,7 +10,7 @@ from starlette_context.middleware import RawContextMiddleware
 
 from api import router
 
-API_PORT = 8080
+API_PORT = 8081
 ROOT_PATH = os.getenv("ROOT_PATH", "")
 API_DEBUG = True
 ALLOWED_HOSTS = CommaSeparatedStrings(os.getenv("ALLOWED_HOSTS", "*"))
@@ -50,7 +50,6 @@ app = CORSMiddleware(
     expose_headers=["X-Total-Count"],
 )
 
-print(app)
 if __name__ == "__main__":
     import os
 
@@ -63,6 +62,5 @@ if __name__ == "__main__":
         "reload_dirs": [f"{os.getcwd()}"],
         "log_level": LOG_LEVEL,
     }
-    print(f"starting uvicorn with config: {conf}")
 
     uvicorn.run("app.main:app", **conf)

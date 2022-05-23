@@ -10,6 +10,11 @@ x-logging-config: &logging-config
       max-file: '5'
       max-size: '100M'
 
+
+networks:
+  backend:
+    driver: bridge
+
 services:
   yovisto:
     container_name: yovisto
@@ -19,8 +24,8 @@ services:
     image: docker.edu-sharing.com/projects/oeh-redaktion/edusharing-projects-oeh-redaktion-yovisto:dev
     <<: *restart-policy
     <<: *logging-config
-    expose:
-      - 8080
+    ports:
+      - "8081:8081"
     environment:
       ROOT_PATH: "/api"
       API_VERSION: "${API_VERSION:-v1}"
@@ -28,4 +33,12 @@ services:
       LOG_LEVEL: "${LOG_LEVEL:-debug}"
       LOGGER: uvicorn
       WEB_CONCURRENCY: 1
-    command: bash -c "uvicorn main:app --host 0.0.0.0 --port 8080 --reload"
+    command: bash -c "uvicorn --host 0.0.0.0 --port 8081 --reload main:app"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8081/_ping" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+    networks:
+      - backend
