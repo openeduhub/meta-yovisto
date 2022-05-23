@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
-from starlette.status import HTTP_200_OK
+from starlette.status import HTTP_200_OK, HTTP_502_BAD_GATEWAY
 
 from topic_finder.topic_assistant import TopicAssistant
 
@@ -14,10 +14,11 @@ class TopicsInput(BaseModel):
 @router.post(
     "/topics",
     status_code=HTTP_200_OK,
+    responses={HTTP_502_BAD_GATEWAY: {"description": "Topics service not responding"}},
 )
-def topics(input: TopicsInput):
+def topics(topics_input: TopicsInput):
     topic_assistant = TopicAssistant()
-    return topic_assistant.go(input.text)
+    return topic_assistant.go(topics_input.text)
 
 
 class Ping(BaseModel):
