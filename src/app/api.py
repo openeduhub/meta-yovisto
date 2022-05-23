@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 from starlette.status import HTTP_200_OK, HTTP_502_BAD_GATEWAY
-
 from topic_finder.topic_assistant import TopicAssistant
 
 router = APIRouter()
