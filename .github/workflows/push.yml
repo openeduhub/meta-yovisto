@@ -40,12 +40,11 @@ jobs:
         run: |
           poetry env use 3.9
           poetry install
+          python -c "import nltk;nltk.download('stopwords')"
       - name: run pre-commit hooks
         run: poetry run pre-commit run --all-file
       - name: run pytest
-        run: |
-          python -c "import nltk;nltk.download('stopwords')"
-          poetry run pytest
+        run: poetry run pytest
       - name: Archive artifacts
         uses: actions/upload-artifact@v3
         with:
