@@ -18,6 +18,7 @@ class TopicsInput(BaseModel):
 )
 def topics(topics_input: TopicsInput):
     topic_assistant = TopicAssistant()
+    print(topic_assistant.tree.nodes)
     return topic_assistant.go(topics_input.text)
 
 

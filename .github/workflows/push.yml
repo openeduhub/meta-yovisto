@@ -23,3 +23,31 @@ jobs:
         run: docker build -t ${{env.docker_repository}}${{env.path_prefix}}:${{env.image_tag}} .
       - name: Push
         run: docker push ${{env.docker_repository}}${{env.path_prefix}}:${{env.image_tag}}
+
+  python-build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.9.7"
+          cache: 'poetry'
+      - name: build artifact and install
+        run: |
+          poetry env use 3.9
+          poetry build
+          poetry install
+      - name: run pre-commit hooks
+        run: poetry run pre-commit run --all-file
+      - name: run pytest
+        run: poetry run pytest
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheel
+          path: |
+            dist/*.whl

@@ -23,10 +23,10 @@ class TopicAssistant:
         # collect discipline labels
         self.disciplineLabels = {}
         gdis = rdflib.Graph()
-        # result = gdis.parse(
-        #     "https://raw.githubusercontent.com/openeduhub/oeh-metadata-vocabs/master/discipline.ttl",
-        #     format="ttl",
-        # )
+        _ = gdis.parse(
+            "https://raw.githubusercontent.com/openeduhub/oeh-metadata-vocabs/master/discipline.ttl",
+            format="ttl",
+        )
         for s, p, o in gdis.triples((None, SKOS.prefLabel, None)):
             try:
                 self.disciplineLabels[s].append(str(o))
@@ -40,12 +40,12 @@ class TopicAssistant:
 
         # create an RDF graph fo rthe topics
         g = rdflib.Graph()
-        #
-        # result = g.parse(
-        #     "https://raw.githubusercontent.com/openeduhub/oeh-metadata-vocabs/master/oehTopics.ttl",
-        #     format="ttl",
-        # )
-        # # result = g.parse("oehTopics.ttl", format="ttl")
+
+        _ = g.parse(
+            "https://raw.githubusercontent.com/openeduhub/oeh-metadata-vocabs/master/oehTopics.ttl",
+            format="ttl",
+        )
+        # result = g.parse("oehTopics.ttl", format="ttl")
 
         # collect discipline mappings
         self.disciplineMappings = {}
