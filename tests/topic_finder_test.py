@@ -1,4 +1,4 @@
-from app.topic_finder.topic_assistant import TopicAssistant
+from src.app.topic_finder.topic_assistant import TopicAssistant
 
 
 def test_topic_finder():
