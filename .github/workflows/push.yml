@@ -40,7 +40,7 @@ jobs:
         run: |
           poetry env use 3.9
           poetry install
-          python -c "import nltk;nltk.download('stopwords')"
+          poetry run python -c "import nltk;nltk.download('stopwords')"
       - name: run pre-commit hooks
         run: poetry run pre-commit run --all-file
       - name: run pytest
