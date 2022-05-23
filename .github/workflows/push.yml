@@ -7,9 +7,8 @@ on:
 
 env:
   docker_repository: "docker.edu-sharing.com"
-  path_prefix: "/projects/oeh-redaktion/edusharing-projects-oeh-redaktion-yovisto-"
+  path_prefix: "/projects/oeh-redaktion/edusharing-projects-oeh-redaktion-yovisto"
   image_tag: "dev"
-  image_name: "topics"
 
 
 jobs:
@@ -21,6 +20,6 @@ jobs:
       - name: Log in to edu sharing
         run: docker login ${{env.docker_repository}} -u ${{ secrets.DOCKER_EDU_HUB_REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_EDU_HUB_REGISTRY_PASSWORD }}
       - name: Build
-        run: docker build -t ${{env.docker_repository}}${{env.path_prefix}}${{env.image_name}}:${{env.image_tag}} .
+        run: docker build -t ${{env.docker_repository}}${{env.path_prefix}}:${{env.image_tag}} .
       - name: Push
-        run: docker push ${{env.docker_repository}}${{env.path_prefix}}${{env.image_name}}:${{env.image_tag}}
+        run: docker push ${{env.docker_repository}}${{env.path_prefix}}:${{env.image_tag}}
