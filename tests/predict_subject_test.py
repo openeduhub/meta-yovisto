@@ -1,4 +1,4 @@
-from app.classification.predict import Prediction
+from src.app.classification.predict import Prediction
 
 
 def test_predict_subject():
