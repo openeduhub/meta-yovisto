@@ -18,23 +18,23 @@ class DuplicateFinder:
 
     numHashes = 100
 
-    def __init__(self):
-        with open("data/hashes.p", "rb") as f:
+    def __init__(self, file_path: str = "data"):
+        with open(f"{file_path}/hashes.p", "rb") as f:
             self.signatures = pickle.load(f)
 
-        with open("data/docnames.p", "rb") as f:
+        with open(f"{file_path}/docnames.p", "rb") as f:
             self.docNames = pickle.load(f)
 
-        with open("data/docs.p", "rb") as f:
+        with open(f"{file_path}/docs.p", "rb") as f:
             self.docs = pickle.load(f)
 
-        with open("data/docUrls.p", "rb") as f:
+        with open(f"{file_path}/docUrls.p", "rb") as f:
             self.docUrls = pickle.load(f)
 
-        with open("data/coeffa.p", "rb") as f:
+        with open(f"{file_path}/coeffa.p", "rb") as f:
             self.coeffA = pickle.load(f)
 
-        with open("data/coeffb.p", "rb") as f:
+        with open(f"{file_path}/coeffb.p", "rb") as f:
             self.coeffB = pickle.load(f)
 
         # 		with open('./data/shingles.p', 'rb') as f:
