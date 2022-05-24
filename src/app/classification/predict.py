@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import pickle
 import re
@@ -10,7 +9,7 @@ from nltk.corpus import stopwords
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 
-class Prediction:
+class SubjectPredictor:
     # should be the same as used for training
     MAX_SEQUENCE_LENGTH = 500
 
@@ -18,7 +17,6 @@ class Prediction:
 
     def __init__(self, modelFile, labelFile, tokenizerFile):
         # We need the same tokenizer as in the training script!!
-        print(os.listdir(), os.getcwd())
         self.tokenizer = pickle.load(open(tokenizerFile, "rb"))
         self.model = tf.keras.models.load_model(modelFile)
         self.class_names = np.load(labelFile, allow_pickle=True)

@@ -1,14 +1,14 @@
-from src.app.classification.predict import Prediction
+from src.app.classification.predict import SubjectPredictor
 
 
 def test_predict_subject():
     dummy_text = "Der Satz des Pythagoras lautet: a^2 + b^2 = c^2."
 
-    model_file = "test_data/wirlernenonline.oeh3.h5"
-    label_file = "test_data/wirlernenonline.oeh3.npy"
-    tokenizer_file = "test_data/wirlernenonline.oeh3.pickle"
+    model_file = "data/wirlernenonline.oeh3.h5"
+    label_file = "data/wirlernenonline.oeh3.npy"
+    tokenizer_file = "data/wirlernenonline.oeh3.pickle"
 
-    prediction = Prediction(model_file, label_file, tokenizer_file)
+    prediction = SubjectPredictor(model_file, label_file, tokenizer_file)
     assert prediction.tokenizer is not None
     result = prediction.run(dummy_text)
     assert len(result) == 1

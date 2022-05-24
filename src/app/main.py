@@ -9,6 +9,9 @@ from starlette.datastructures import CommaSeparatedStrings
 from starlette.middleware.cors import CORSMiddleware
 from starlette_context.middleware import RawContextMiddleware
 
+from app.core.settings import WANT_RETRAINING
+from app.duplicate_finder.createHashes import create_hashes
+
 API_PORT = 8081
 ROOT_PATH = os.getenv("ROOT_PATH", "")
 API_DEBUG = True
@@ -34,6 +37,9 @@ def api() -> FastAPI:
             route.operation_id = route.name
 
     _api.add_middleware(RawContextMiddleware)
+
+    if WANT_RETRAINING:
+        _api.add_event_handler("startup", create_hashes)
 
     return _api
 

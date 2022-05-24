@@ -1,11 +1,12 @@
-from typing import Union
+from typing import Optional, Union
 
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 from starlette.status import HTTP_200_OK, HTTP_502_BAD_GATEWAY
 from topic_finder.topic_assistant import TopicAssistant
 
-from app.classification.predict import Prediction
+from app.classification.predict import SubjectPredictor
+from app.duplicate_finder.predict import DuplicateFinder
 
 router = APIRouter()
 
@@ -66,23 +67,40 @@ def predict_subject(prediction_input: PredictSubjectInput):
     labelFile = "data/wirlernenonline.oeh3.npy"
     tokenizerFile = "data/wirlernenonline.oeh3.pickle"
 
-    prediction = Prediction(modelFile, labelFile, tokenizerFile)
+    prediction = SubjectPredictor(modelFile, labelFile, tokenizerFile)
     return prediction.run(prediction_input.text)
 
 
+class PredictDuplicatesInput(BaseModel):
+    id: Optional[str]
+    url: Optional[str]
+    text: Optional[str]
+    threshold: Optional[float]
+
+
 @router.post(
-    "/train/subjects",
+    "/predict/duplicates",
     status_code=HTTP_200_OK,
+    response_model=list[list[Union[str, float]]],
     responses={
         HTTP_502_BAD_GATEWAY: {"description": "Predict subject service not responding"}
     },
 )
-def train_subject(prediction_input: PredictSubjectInput):
-    "/data/wirlernenonline.oeh3.h5 /data/wirlernenonline.oeh3.npy  /data/wirlernenonline.oeh3.pickle"
-    modelFile = "/data/wirlernenonline.oeh3.h5"
-    labelFile = "/data/wirlernenonline.oeh3.npy"
-    tokenizerFile = "/data/wirlernenonline.oeh3.pickle"
+def predict_duplicates(prediction_input: PredictDuplicatesInput):
+    duplicate_finder = DuplicateFinder()
 
-    prediction = Prediction(modelFile, labelFile, tokenizerFile)
-    print(prediction)
-    return prediction.run(prediction_input.text)
+    if not prediction_input.threshold:
+        threshold = 0.8
+    else:
+        threshold = prediction_input.threshold
+
+    if prediction_input.id:
+        output = duplicate_finder.runById(prediction_input.id)
+    elif prediction_input.url:
+        output = duplicate_finder.runByUrl(prediction_input.url)
+    elif prediction_input.text:
+        output = duplicate_finder.runByText(prediction_input.text, threshold)
+    else:
+        output = {}
+
+    return output
