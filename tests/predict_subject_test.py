@@ -1,3 +1,5 @@
+import os
+
 from src.app.classification.predict import SubjectPredictor
 
 
@@ -8,6 +10,7 @@ def test_predict_subject():
     label_file = "data/wirlernenonline.oeh3.npy"
     tokenizer_file = "data/wirlernenonline.oeh3.pickle"
 
+    print(os.listdir(), os.getcwd())
     prediction = SubjectPredictor(model_file, label_file, tokenizer_file)
     assert prediction.tokenizer is not None
     result = prediction.run(dummy_text)

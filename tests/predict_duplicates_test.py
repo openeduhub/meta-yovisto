@@ -1,3 +1,5 @@
+import os
+
 from src.app.duplicate_finder.predict import DuplicateFinder
 
 
@@ -6,7 +8,7 @@ def test_predict_duplicates():
         "Bruchterme - gemeinsamer Nenner Bruchterme - gemeinsamer Nenner_1603916225648 "
         "Suche den gemeinsamen Nenner der beiden Bruchterme!"
     )
-
+    print(os.listdir(), os.getcwd())
     duplicate_finder = DuplicateFinder()
     output = duplicate_finder.runByText(dummy_text, 0.8)
 
