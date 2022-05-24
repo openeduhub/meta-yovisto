@@ -62,7 +62,6 @@ class PredictSubjectInput(BaseModel):
     },
 )
 def predict_subject(prediction_input: PredictSubjectInput):
-    "/data/wirlernenonline.oeh3.h5 /data/wirlernenonline.oeh3.npy  /data/wirlernenonline.oeh3.pickle"
     modelFile = "data/wirlernenonline.oeh3.h5"
     labelFile = "data/wirlernenonline.oeh3.npy"
     tokenizerFile = "data/wirlernenonline.oeh3.pickle"
