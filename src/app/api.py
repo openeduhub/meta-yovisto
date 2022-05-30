@@ -44,6 +44,8 @@ class TopicsInput(BaseModel):
     status_code=HTTP_200_OK,
     response_model=list[TopicsResponse],
     responses={HTTP_502_BAD_GATEWAY: {"description": "Topics service not responding"}},
+    description="Predicts to which topics the input text could belong, e.g., to maths, calculus or analysis? "
+    "Returns a list of objects with the uri's and names of matching topics according to SKOS.",
 )
 def topics(topics_input: TopicsInput):
     topic_assistant = TopicAssistant()
@@ -76,6 +78,7 @@ class PredictSubjectInput(BaseModel):
     responses={
         HTTP_502_BAD_GATEWAY: {"description": "Predict subject service not responding"}
     },
+    description="Predicts the subjects, to which the given text belongs, e.g., mathematics or english.",
 )
 def predict_subject(prediction_input: PredictSubjectInput):
     model_file = "data/wirlernenonline.oeh3.h5"
@@ -100,6 +103,9 @@ class PredictDuplicatesInput(BaseModel):
     responses={
         HTTP_502_BAD_GATEWAY: {"description": "Predict subject service not responding"}
     },
+    description="Predicts possible duplicates and returns their id, url and description based on input id, url or text."
+    "Only one of the input elements is used, prioritized by id > url > text."
+    "A threshold can be added as a minimum confidence required for a duplicate to be flagged as duplicate.",
 )
 def predict_duplicates(prediction_input: PredictDuplicatesInput):
     duplicate_finder = DuplicateFinder()
@@ -132,6 +138,7 @@ class PredictSimilarDocumentsInput(BaseModel):
     responses={
         HTTP_502_BAD_GATEWAY: {"description": "Predict subject service not responding"}
     },
+    description="Predicts similar documents, which would be of interest to readers/consumers of this document.",
 )
 def predict_similar_documents(prediction_input: PredictSimilarDocumentsInput):
 
