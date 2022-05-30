@@ -7,6 +7,7 @@ from topic_finder.topic_assistant import TopicAssistant
 
 from app.classification.predict import SubjectPredictor
 from app.duplicate_finder.predict import DuplicateFinder
+from app.recommender.predict import Recommender
 
 router = APIRouter()
 
@@ -63,11 +64,11 @@ class PredictSubjectInput(BaseModel):
     },
 )
 def predict_subject(prediction_input: PredictSubjectInput):
-    modelFile = "data/wirlernenonline.oeh3.h5"
-    labelFile = "data/wirlernenonline.oeh3.npy"
-    tokenizerFile = "data/wirlernenonline.oeh3.pickle"
+    model_file = "data/wirlernenonline.oeh3.h5"
+    label_file = "data/wirlernenonline.oeh3.npy"
+    tokenizer_file = "data/wirlernenonline.oeh3.pickle"
 
-    prediction = SubjectPredictor(modelFile, labelFile, tokenizerFile)
+    prediction = SubjectPredictor(model_file, label_file, tokenizer_file)
     return prediction.run(prediction_input.text)
 
 
@@ -102,5 +103,27 @@ def predict_duplicates(prediction_input: PredictDuplicatesInput):
         output = duplicate_finder.runByText(prediction_input.text, threshold)
     else:
         output = {}
+
+    return output
+
+
+class PredictSimilarDocumentsInput(BaseModel):
+    id: str
+
+
+@router.post(
+    "/predict/similar_documents",
+    status_code=HTTP_200_OK,
+    response_model=list[list[Union[str, float]]],
+    responses={
+        HTTP_502_BAD_GATEWAY: {"description": "Predict subject service not responding"}
+    },
+)
+def predict_similar_documents(prediction_input: PredictSimilarDocumentsInput):
+
+    model_file = "data/wirlernenonline.oeh-embed.h5"
+    id_file = "data/wirlernenonline.oeh-id.pickle"
+    duplicate_finder = Recommender(model_file, id_file)
+    output = duplicate_finder.run(prediction_input.id)
 
     return output
