@@ -9,7 +9,7 @@ def test_predict_duplicates():
         "Suche den gemeinsamen Nenner der beiden Bruchterme!"
     )
     print(os.listdir(), os.getcwd())
-    duplicate_finder = DuplicateFinder(file_path="tests/data")
+    duplicate_finder = DuplicateFinder(file_path="data")
     output = duplicate_finder.runByText(dummy_text, 0.8)
 
     assert len(output[0]) == 3

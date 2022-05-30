@@ -2,15 +2,14 @@ import logging
 import os
 
 from api import router
+from core.settings import WANT_RETRAINING
 from dotenv import load_dotenv
+from duplicate_finder.createHashes import create_hashes
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
 from starlette.datastructures import CommaSeparatedStrings
 from starlette.middleware.cors import CORSMiddleware
 from starlette_context.middleware import RawContextMiddleware
-
-from app.core.settings import WANT_RETRAINING
-from app.duplicate_finder.createHashes import create_hashes
 
 API_PORT = 8081
 ROOT_PATH = os.getenv("ROOT_PATH", "")

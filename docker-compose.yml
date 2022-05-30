@@ -25,15 +25,15 @@ services:
     <<: *restart-policy
     <<: *logging-config
     ports:
-      - "8081:8081"
+      - "8082:8082"
     environment:
-      ROOT_PATH: "/api"
+      ROOT_PATH: ""
       API_VERSION: "${API_VERSION:-v1}"
       ALLOWED_HOSTS: "${ALLOWED_HOSTS:-*}"
       LOG_LEVEL: "${LOG_LEVEL:-debug}"
       LOGGER: uvicorn
       WEB_CONCURRENCY: 1
-    command: bash -c "uvicorn --host 0.0.0.0 --port 8081 --reload main:app"
+    command: bash -c "uvicorn --host 0.0.0.0 --port 8082 --reload main:app"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8081/_ping" ]
       interval: 30s

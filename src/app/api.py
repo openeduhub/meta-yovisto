@@ -1,13 +1,12 @@
 from typing import Optional, Union
 
+from classification.predict import SubjectPredictor
+from duplicate_finder.predict import DuplicateFinder
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
+from recommender.predict import Recommender
 from starlette.status import HTTP_200_OK, HTTP_502_BAD_GATEWAY
 from topic_finder.topic_assistant import TopicAssistant, flatten_children
-
-from app.classification.predict import SubjectPredictor
-from app.duplicate_finder.predict import DuplicateFinder
-from app.recommender.predict import Recommender
 
 router = APIRouter()
 
@@ -141,7 +140,6 @@ class PredictSimilarDocumentsInput(BaseModel):
     description="Predicts similar documents, which would be of interest to readers/consumers of this document.",
 )
 def predict_similar_documents(prediction_input: PredictSimilarDocumentsInput):
-
     model_file = "data/wirlernenonline.oeh-embed.h5"
     id_file = "data/wirlernenonline.oeh-id.pickle"
     duplicate_finder = Recommender(model_file, id_file)

@@ -6,9 +6,9 @@ from src.app.classification.predict import SubjectPredictor
 def test_predict_subject():
     dummy_text = "Der Satz des Pythagoras lautet: a^2 + b^2 = c^2."
 
-    model_file = "tests/data/wirlernenonline.oeh3.h5"
-    label_file = "tests/data/wirlernenonline.oeh3.npy"
-    tokenizer_file = "tests/data/wirlernenonline.oeh3.pickle"
+    model_file = "data/wirlernenonline.oeh3.h5"
+    label_file = "data/wirlernenonline.oeh3.npy"
+    tokenizer_file = "data/wirlernenonline.oeh3.pickle"
 
     print(os.listdir(), os.getcwd())
     prediction = SubjectPredictor(model_file, label_file, tokenizer_file)
