@@ -187,6 +187,12 @@ def flatten_children(data: dict) -> list:
             "name": name,
             "weight": data[name]["data"]["w"],
             "uri": data[name]["data"]["uri"],
+            "label": data[name]["data"]["label"]
+            if "label" in data[name]["data"].keys()
+            else "",
+            "match": data[name]["data"]["match"]
+            if "match" in data[name]["data"].keys()
+            else "",
         }
     ]
 

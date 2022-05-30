@@ -18,13 +18,19 @@ class WLOResponse(BaseModel):
 
 class TopicsResponse(BaseModel):
     name: str = Field(
-        description="Human readable name of the found topic.",
+        description="Human readable name of the found topic with weight in brackets.",
     )
     weight: int = Field(
         description="Number of occurrences of this topic.",
     )
     uri: str = Field(
         description="URI of the found topic.",
+    )
+    match: str = Field(
+        description="Additional information.",
+    )
+    label: str = Field(
+        description="Name of the topic.",
     )
 
 
