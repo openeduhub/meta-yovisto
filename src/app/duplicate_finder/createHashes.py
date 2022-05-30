@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 import binascii
 import pickle
 import random
 import time
+from zipfile import ZipFile
 
 """
 A MinHash-based near duplicate detection for the WLO dataset.
@@ -12,8 +12,15 @@ A MinHash-based near duplicate detection for the WLO dataset.
 
 
 def create_hashes():
+    data_folder = "data"
+    file = f"{data_folder}/wirlernenonline3-dedup.txt.zip"
+
+    # open the zip file in read mode
+    with ZipFile(file, "r") as zip_file:
+        zip_file.extractall(data_folder)
+
     numHashes = 100
-    dataFile = "./data/wirlernenonline3-dedup.txt"
+    dataFile = f"{data_folder}/wirlernenonline3-dedup.txt"
 
     def shingleWords(words):
         # 'shinglesInDoc' will hold all of the unique shingle IDs present in the
