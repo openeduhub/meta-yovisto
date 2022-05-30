@@ -175,6 +175,30 @@ class TopicAssistant:
         )
 
 
+def flatten_children(data: dict) -> list:
+    response = []
+    name = list(data.keys())[0]
+    if "children" in data[name].keys():
+        for entry in data[name]["children"]:
+            response += flatten_children(entry)
+
+    response += [
+        {
+            "name": name,
+            "weight": data[name]["data"]["w"],
+            "uri": data[name]["data"]["uri"],
+            "label": data[name]["data"]["label"]
+            if "label" in data[name]["data"].keys()
+            else "",
+            "match": data[name]["data"]["match"]
+            if "match" in data[name]["data"].keys()
+            else "",
+        }
+    ]
+
+    return response
+
+
 if __name__ == "__main__":
     text = sys.argv[1]
     a = TopicAssistant()

@@ -3,7 +3,7 @@ from typing import Optional, Union
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 from starlette.status import HTTP_200_OK, HTTP_502_BAD_GATEWAY
-from topic_finder.topic_assistant import TopicAssistant
+from topic_finder.topic_assistant import TopicAssistant, flatten_children
 
 from app.classification.predict import SubjectPredictor
 from app.duplicate_finder.predict import DuplicateFinder
@@ -18,7 +18,21 @@ class WLOResponse(BaseModel):
 
 
 class TopicsResponse(BaseModel):
-    WLO: WLOResponse
+    name: str = Field(
+        description="Human readable name of the found topic with weight in brackets.",
+    )
+    weight: int = Field(
+        description="Number of occurrences of this topic.",
+    )
+    uri: str = Field(
+        description="URI of the found topic.",
+    )
+    match: str = Field(
+        description="Additional information.",
+    )
+    label: str = Field(
+        description="Name of the topic.",
+    )
 
 
 class TopicsInput(BaseModel):
@@ -28,12 +42,12 @@ class TopicsInput(BaseModel):
 @router.post(
     "/topics",
     status_code=HTTP_200_OK,
-    response_model=TopicsResponse,
+    response_model=list[TopicsResponse],
     responses={HTTP_502_BAD_GATEWAY: {"description": "Topics service not responding"}},
 )
 def topics(topics_input: TopicsInput):
     topic_assistant = TopicAssistant()
-    return topic_assistant.go(topics_input.text)
+    return flatten_children(topic_assistant.go(topics_input.text))
 
 
 class Ping(BaseModel):
