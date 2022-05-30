@@ -175,28 +175,21 @@ class TopicAssistant:
         )
 
 
-def child_or_self(data: dict) -> list:
+def flatten_children(data: dict) -> list:
     response = []
     name = list(data.keys())[0]
     if "children" in data[name].keys():
         for entry in data[name]["children"]:
-            response += child_or_self(entry)
+            response += flatten_children(entry)
 
     response += [
         {
             "name": name,
-            "number_of_occurences": data[name]["data"]["w"],
+            "weight": data[name]["data"]["w"],
             "uri": data[name]["data"]["uri"],
         }
     ]
 
-    return response
-
-
-def flatten_output(data: dict):
-    response = []
-    for entry in data["WLO"]["children"]:
-        response += child_or_self(entry)
     return response
 
 
