@@ -12,3 +12,4 @@ COPY poetry.lock poetry.lock
 RUN poetry install --no-root
 RUN python -c "import nltk;nltk.download('stopwords')"
 COPY src/app /app
+COPY src/data /app/data
