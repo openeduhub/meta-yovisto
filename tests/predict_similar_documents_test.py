@@ -6,8 +6,8 @@ from src.app.recommender.predict import Recommender
 def test_predict_similar_documents():
     dummy_id = "1e6e21fd-e5d6-4046-a532-803708ea130d"
 
-    model_file = "data/wirlernenonline.oeh-embed.h5"
-    id_file = "data/wirlernenonline.oeh-id.pickle"
+    model_file = "tests/data/wirlernenonline.oeh-embed.h5"
+    id_file = "tests/data/wirlernenonline.oeh-id.pickle"
 
     print(os.listdir(), os.getcwd())
     prediction = Recommender(model_file, id_file)
