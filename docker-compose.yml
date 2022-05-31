@@ -35,7 +35,7 @@ services:
       WEB_CONCURRENCY: 1
     command: bash -c "uvicorn --host 0.0.0.0 --port 8082 --reload main:app"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8081/_ping" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8082/_ping" ]
       interval: 30s
       timeout: 5s
       retries: 3
