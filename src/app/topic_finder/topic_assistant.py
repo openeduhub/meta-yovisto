@@ -10,7 +10,7 @@ from rdflib import URIRef
 from rdflib.namespace import RDF, SKOS
 from treelib import Tree
 
-from app.core.settings import logger
+from src.app.core.settings import logger
 
 STOPWORDS = set(stopwords.words("german")).union(set(stopwords.words("english")))
 
