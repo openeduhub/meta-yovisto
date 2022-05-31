@@ -31,7 +31,7 @@ services:
       LOG_LEVEL: "${LOG_LEVEL:-debug}"
       LOGGER: uvicorn
       WEB_CONCURRENCY: 1
-      WANT_RETRAINING: False
+      WANT_RETRAINING: "${WANT_RETRAINING:-false}"
     command: bash -c "uvicorn --host 0.0.0.0 --port 8082 --reload main:app"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8082/_ping" ]

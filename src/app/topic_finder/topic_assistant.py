@@ -1,6 +1,7 @@
 # https://github.com/openeduhub/oeh-metadata-vocabs/blob/master/oehTopics.ttl
 
 import json
+import logging
 import re
 import sys
 
@@ -10,9 +11,9 @@ from rdflib import URIRef
 from rdflib.namespace import RDF, SKOS
 from treelib import Tree
 
-from src.app.core.settings import logger
-
 STOPWORDS = set(stopwords.words("german")).union(set(stopwords.words("english")))
+logger = logging.getLogger()
+logger.setLevel("DEBUG")
 
 
 class TopicAssistant:

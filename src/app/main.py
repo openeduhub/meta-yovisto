@@ -1,21 +1,20 @@
 from api import router
-from core.settings import WANT_RETRAINING
-from dotenv import load_dotenv
-from duplicate_finder.createHashes import create_hashes
-from fastapi import FastAPI
-from fastapi.routing import APIRoute
-from starlette.middleware.cors import CORSMiddleware
-from starlette_context.middleware import RawContextMiddleware
-
-from app.core.settings import (
+from core.settings import (
     ALLOWED_HOSTS,
     API_DEBUG,
     API_PORT,
     LOG_LEVEL,
     OPEN_API_VERSION,
     ROOT_PATH,
+    WANT_RETRAINING,
     logger,
 )
+from dotenv import load_dotenv
+from duplicate_finder.createHashes import create_hashes
+from fastapi import FastAPI
+from fastapi.routing import APIRoute
+from starlette.middleware.cors import CORSMiddleware
+from starlette_context.middleware import RawContextMiddleware
 
 
 def api() -> FastAPI:

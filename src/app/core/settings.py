@@ -1,9 +1,12 @@
+import distutils.util
 import logging
 import os
 
 from starlette.datastructures import CommaSeparatedStrings
 
-WANT_RETRAINING = os.getenv("WANT_RETRAINING", False)
+WANT_RETRAINING = bool(
+    distutils.util.strtobool(os.environ.get("WANT_RETRAINING", "false"))
+)
 API_PORT = 8080
 ROOT_PATH = os.getenv("ROOT_PATH", "")
 API_DEBUG = True
