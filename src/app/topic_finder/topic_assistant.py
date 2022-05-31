@@ -10,6 +10,8 @@ from rdflib import URIRef
 from rdflib.namespace import RDF, SKOS
 from treelib import Tree
 
+from app.core.settings import logger
+
 STOPWORDS = set(stopwords.words("german")).union(set(stopwords.words("english")))
 
 
@@ -19,7 +21,8 @@ class TopicAssistant:
         return s.lower()
 
     def __init__(self):
-
+        logger.debug("Topic Assistant: start init")
+        print("Topic Assistant: start init")
         # collect discipline labels
         self.disciplineLabels = {}
         gdis = rdflib.Graph()
@@ -115,7 +118,8 @@ class TopicAssistant:
         self.keywords = keywords
         self.tree = tree
 
-        # sys.exit()
+        logger.debug("Topic Assistant: init done")
+        print("Topic Assistant: init done")
 
     def go(self, exampleText):
         T = Tree(self.tree, deep=True)

@@ -1,23 +1,21 @@
-import logging
-import os
-
 from api import router
 from core.settings import WANT_RETRAINING
 from dotenv import load_dotenv
 from duplicate_finder.createHashes import create_hashes
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
-from starlette.datastructures import CommaSeparatedStrings
 from starlette.middleware.cors import CORSMiddleware
 from starlette_context.middleware import RawContextMiddleware
 
-API_PORT = 8081
-ROOT_PATH = os.getenv("ROOT_PATH", "")
-API_DEBUG = True
-ALLOWED_HOSTS = CommaSeparatedStrings(os.getenv("ALLOWED_HOSTS", "*"))
-LOG_LEVEL = os.getenv("LOG_LEVEL")
-OPEN_API_VERSION = "2.1.0"
-logger = logging.getLogger(f"{os.getenv('LOGGER', 'gunicorn')}.error")
+from app.core.settings import (
+    ALLOWED_HOSTS,
+    API_DEBUG,
+    API_PORT,
+    LOG_LEVEL,
+    OPEN_API_VERSION,
+    ROOT_PATH,
+    logger,
+)
 
 
 def api() -> FastAPI:

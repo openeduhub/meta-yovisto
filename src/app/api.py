@@ -47,7 +47,9 @@ class TopicsInput(BaseModel):
     "Returns a list of objects with the uri's and names of matching topics according to SKOS.",
 )
 def topics(topics_input: TopicsInput):
+    print("incoming")
     topic_assistant = TopicAssistant()
+    print("outgoing")
     return flatten_children(topic_assistant.go(topics_input.text))
 
 
