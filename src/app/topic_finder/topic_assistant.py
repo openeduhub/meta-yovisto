@@ -1,5 +1,3 @@
-# https://github.com/openeduhub/oeh-metadata-vocabs/blob/master/oehTopics.ttl
-
 import json
 import logging
 import re
@@ -21,14 +19,14 @@ class TopicAssistant:
         s = re.sub("[^A-Za-z0-9öüäÖÄÜß]+", " ", s)
         return s.lower()
 
-    def __init__(self):
+    def __init__(self, data_folder: str = "data"):
         logger.debug("Topic Assistant: start init")
         print("Topic Assistant: start init")
         # collect discipline labels
         self.disciplineLabels = {}
         gdis = rdflib.Graph()
         _ = gdis.parse(
-            "https://raw.githubusercontent.com/openeduhub/oeh-metadata-vocabs/master/discipline.ttl",
+            file=open(f"{data_folder}/discipline.ttl"),
             format="ttl",
         )
         for s, p, o in gdis.triples((None, SKOS.prefLabel, None)):
@@ -46,7 +44,7 @@ class TopicAssistant:
         g = rdflib.Graph()
 
         _ = g.parse(
-            "https://raw.githubusercontent.com/openeduhub/oeh-metadata-vocabs/master/oehTopics.ttl",
+            file=open(f"{data_folder}/oehTopics.ttl"),
             format="ttl",
         )
         # result = g.parse("oehTopics.ttl", format="ttl")
@@ -87,6 +85,8 @@ class TopicAssistant:
 
         # collect the "index terms" from keywords, preflabels, and discipline labels
         keywords = {}
+        logger.debug("Topic Assistant: Loading keywords")
+        print("Topic Assistant: Loading keywords")
         for s, p, o in g.triples((None, URIRef("https://schema.org/keywords"), None)):
             # print (s, o)
             for k in str(o).split(","):
