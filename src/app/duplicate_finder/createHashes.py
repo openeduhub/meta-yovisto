@@ -11,11 +11,11 @@ A MinHash-based near duplicate detection for the WLO dataset.
 """
 
 
-def create_hashes():
-    data_folder = "data"
+def create_hashes(data_folder: str = "data"):
     file = f"{data_folder}/wirlernenonline3-dedup.txt.zip"
 
     # open the zip file in read mode
+    print(file)
     with ZipFile(file, "r") as zip_file:
         zip_file.extractall(data_folder)
 
@@ -220,25 +220,30 @@ def create_hashes():
 
     print("\nStoring data ...")
 
-    with open("./data/hashes.p", "wb") as f:
+    with open(f"{data_folder}/hashes.p", "wb") as f:
         pickle.dump(signatures, f)
 
-    with open("./data/docnames.p", "wb") as f:
+    with open(f"{data_folder}/docnames.p", "wb") as f:
         pickle.dump(docNames, f)
 
-    with open("./data/coeffa.p", "wb") as f:
+    with open(f"{data_folder}/coeffa.p", "wb") as f:
         pickle.dump(coeffA, f)
 
-    with open("./data/coeffb.p", "wb") as f:
+    with open(f"{data_folder}/coeffb.p", "wb") as f:
         pickle.dump(coeffB, f)
 
-    with open("./data/docs.p", "wb") as f:
+    with open(f"{data_folder}/docs.p", "wb") as f:
         pickle.dump(docs, f)
 
-    with open("./data/docUrls.p", "wb") as f:
+    with open(f"{data_folder}/docUrls.p", "wb") as f:
         pickle.dump(docUrls, f)
 
-    with open("./data/shingles.p", "wb") as f:
+    with open(f"{data_folder}/shingles.p", "wb") as f:
         pickle.dump(docsAsShingleSets, f)
 
     print("\n... done!")
+
+
+if __name__ == "__main__":
+    data = "../../data"
+    create_hashes(data)
