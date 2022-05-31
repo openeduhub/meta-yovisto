@@ -1,5 +1,4 @@
 import json
-import logging
 import re
 import sys
 
@@ -10,8 +9,6 @@ from rdflib.namespace import RDF, SKOS
 from treelib import Tree
 
 STOPWORDS = set(stopwords.words("german")).union(set(stopwords.words("english")))
-logger = logging.getLogger()
-logger.setLevel("DEBUG")
 
 
 class TopicAssistant:
@@ -20,8 +17,6 @@ class TopicAssistant:
         return s.lower()
 
     def __init__(self, data_folder: str = "data"):
-        logger.debug("Topic Assistant: start init")
-        print("Topic Assistant: start init")
         # collect discipline labels
         self.disciplineLabels = {}
         gdis = rdflib.Graph()
@@ -85,8 +80,6 @@ class TopicAssistant:
 
         # collect the "index terms" from keywords, preflabels, and discipline labels
         keywords = {}
-        logger.debug("Topic Assistant: Loading keywords")
-        print("Topic Assistant: Loading keywords")
         for s, p, o in g.triples((None, URIRef("https://schema.org/keywords"), None)):
             # print (s, o)
             for k in str(o).split(","):
@@ -118,9 +111,6 @@ class TopicAssistant:
 
         self.keywords = keywords
         self.tree = tree
-
-        logger.debug("Topic Assistant: init done")
-        print("Topic Assistant: init done")
 
     def go(self, exampleText):
         T = Tree(self.tree, deep=True)
