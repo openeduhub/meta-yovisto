@@ -26,11 +26,9 @@ services:
     <<: *logging-config
     environment:
       ROOT_PATH: ""
-      API_VERSION: "${API_VERSION:-v1}"
       ALLOWED_HOSTS: "${ALLOWED_HOSTS:-*}"
       LOG_LEVEL: "${LOG_LEVEL:-debug}"
       LOGGER: uvicorn
-      WEB_CONCURRENCY: 1
       WANT_RETRAINING: "${WANT_RETRAINING:-false}"
     command: bash -c "uvicorn --host 0.0.0.0 --port 8082 --reload main:app"
     healthcheck:
