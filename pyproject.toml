@@ -5,7 +5,7 @@ description = ""
 authors = ["Robert Meissner <robert.meissner@codecentric.de>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.9,<3.11"
 fastapi = "^0.78.0"
 starlette-context = "^0.3.3"
 python-dotenv = "^0.20.0"
@@ -15,6 +15,11 @@ treelib = "^1.6.1"
 uvicorn = "^0.17.6"
 pre-commit = "^2.19.0"
 pytest = "^7.1.2"
+numpy = "^1.22.4"
+scikit-learn = "^1.1.1"
+pandas = "^1.4.2"
+tensorflow = "^2.9.1"
+tensorflow-datasets = "^4.5.2"
 
 [tool.poetry.dev-dependencies]
 

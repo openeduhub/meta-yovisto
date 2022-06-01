@@ -1,5 +1,3 @@
-# https://github.com/openeduhub/oeh-metadata-vocabs/blob/master/oehTopics.ttl
-
 import json
 import re
 import sys
@@ -18,13 +16,12 @@ class TopicAssistant:
         s = re.sub("[^A-Za-z0-9öüäÖÄÜß]+", " ", s)
         return s.lower()
 
-    def __init__(self):
-
+    def __init__(self, data_folder: str = "data"):
         # collect discipline labels
         self.disciplineLabels = {}
         gdis = rdflib.Graph()
         _ = gdis.parse(
-            "https://raw.githubusercontent.com/openeduhub/oeh-metadata-vocabs/master/discipline.ttl",
+            file=open(f"{data_folder}/discipline.ttl"),
             format="ttl",
         )
         for s, p, o in gdis.triples((None, SKOS.prefLabel, None)):
@@ -42,7 +39,7 @@ class TopicAssistant:
         g = rdflib.Graph()
 
         _ = g.parse(
-            "https://raw.githubusercontent.com/openeduhub/oeh-metadata-vocabs/master/oehTopics.ttl",
+            file=open(f"{data_folder}/oehTopics.ttl"),
             format="ttl",
         )
         # result = g.parse("oehTopics.ttl", format="ttl")
@@ -115,8 +112,6 @@ class TopicAssistant:
         self.keywords = keywords
         self.tree = tree
 
-        # sys.exit()
-
     def go(self, exampleText):
         T = Tree(self.tree, deep=True)
 
@@ -173,6 +168,30 @@ class TopicAssistant:
         return T.to_dict(
             with_data=True, key=lambda node: node.data["w"], sort=True, reverse=True
         )
+
+
+def flatten_children(data: dict) -> list:
+    response = []
+    name = list(data.keys())[0]
+    if "children" in data[name].keys():
+        for entry in data[name]["children"]:
+            response += flatten_children(entry)
+
+    response += [
+        {
+            "name": name,
+            "weight": data[name]["data"]["w"],
+            "uri": data[name]["data"]["uri"],
+            "label": data[name]["data"]["label"]
+            if "label" in data[name]["data"].keys()
+            else "",
+            "match": data[name]["data"]["match"]
+            if "match" in data[name]["data"].keys()
+            else "",
+        }
+    ]
+
+    return response
 
 
 if __name__ == "__main__":
