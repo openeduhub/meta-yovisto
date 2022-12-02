@@ -39,7 +39,7 @@ jobs:
       - name: Set up Python 3.9
         uses: actions/setup-python@v3
         with:
-          python-version: "3.9.7"
+          python-version: "3.9.13"
           cache: 'poetry'
       - name: build artifact and install
         run: |
