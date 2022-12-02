@@ -18,11 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Login to EDU-Sharing Container Registry
-          uses: docker/login-action@v2
-          with:
-            registry: ${{ env.docker_repository }}
-            username: ${{ secrets.DOCKER_EDU_HUB_REGISTRY_USERNAME }}
-            password: ${{ secrets.DOCKER_EDU_HUB_REGISTRY_PASSWORD }}
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.docker_repository }}
+          username: ${{ secrets.DOCKER_EDU_HUB_REGISTRY_USERNAME }}
+          password: ${{ secrets.DOCKER_EDU_HUB_REGISTRY_PASSWORD }}
       - name: Build
         run: docker build -t ${{env.docker_repository}}${{env.path_prefix}}:${{env.image_tag}} .
       - name: Push
