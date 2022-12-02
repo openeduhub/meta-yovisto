@@ -16,13 +16,18 @@ jobs:
     name: Build and Push Yovisto topics image to community edu hub
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Log in to edu sharing
-        run: docker login ${{env.docker_repository}} -u ${{ secrets.DOCKER_EDU_HUB_REGISTRY_USERNAME }} -p ${{ secrets.DOCKER_EDU_HUB_REGISTRY_PASSWORD }}
+      - uses: actions/checkout@v3
+      - name: Login to EDU-Sharing Container Registry
+          uses: docker/login-action@v2
+          with:
+            registry: ${{ env.docker_repository }}
+            username: ${{ secrets.DOCKER_EDU_HUB_REGISTRY_USERNAME }}
+            password: ${{ secrets.DOCKER_EDU_HUB_REGISTRY_PASSWORD }}
       - name: Build
         run: docker build -t ${{env.docker_repository}}${{env.path_prefix}}:${{env.image_tag}} .
       - name: Push
         run: docker push ${{env.docker_repository}}${{env.path_prefix}}:${{env.image_tag}}
+
 
   python-build-and-test:
     runs-on: ubuntu-latest
