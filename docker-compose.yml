@@ -21,7 +21,7 @@ services:
     build:
       context: .
       network: host
-    image: docker.edu-sharing.com/projects/oeh-redaktion/edusharing-projects-oeh-redaktion-yovisto:dev
+    image: docker.edu-sharing.com/projects/wlo/edu_sharing-projects-wlo-yovisto:dev
     <<: *restart-policy
     <<: *logging-config
     environment:

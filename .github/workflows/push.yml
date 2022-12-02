@@ -7,7 +7,7 @@ on:
 
 env:
   docker_repository: "docker.edu-sharing.com"
-  path_prefix: "/projects/oeh-redaktion/edusharing-projects-oeh-redaktion-yovisto"
+  path_prefix: "/projects/wlo/edu_sharing-projects-wlo-yovisto"
   image_tag: "dev"
 
 
