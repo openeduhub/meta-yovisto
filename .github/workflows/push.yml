@@ -43,7 +43,7 @@ jobs:
           cache: 'poetry'
       - name: build artifact and install
         run: |
-          poetry env use 3.9
+          poetry env use 3.10
           poetry install
           poetry run python -c "import nltk;nltk.download('stopwords')"
       - name: run pre-commit hooks
