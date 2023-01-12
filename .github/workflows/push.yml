@@ -2,13 +2,10 @@ name: Yovisto push actions
 
 on:
   push:
-    branches:
-      - "**"
 
 env:
   docker_repository: "docker.edu-sharing.com"
   path_prefix: "/projects/wlo/edu_sharing-projects-wlo-yovisto"
-  image_tag: "dev"
 
 
 jobs:
@@ -23,10 +20,11 @@ jobs:
           registry: ${{ env.docker_repository }}
           username: ${{ secrets.DOCKER_EDU_HUB_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_EDU_HUB_REGISTRY_PASSWORD }}
+      - uses: rlespinasse/github-slug-action@v4
       - name: Build
-        run: docker build -t ${{env.docker_repository}}${{env.path_prefix}}:${{env.image_tag}} .
+        run: docker build -t ${{env.docker_repository}}${{env.path_prefix}}:${{ env.GITHUB_REF_SLUG }} .
       - name: Push
-        run: docker push ${{env.docker_repository}}${{env.path_prefix}}:${{env.image_tag}}
+        run: docker push ${{env.docker_repository}}${{env.path_prefix}}:${{ env.GITHUB_REF_SLUG }}
 
 
   python-build-and-test:
