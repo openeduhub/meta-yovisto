@@ -22,8 +22,7 @@ services:
       context: .
       network: host
     image: docker.edu-sharing.com/projects/wlo/edu_sharing-projects-wlo-yovisto:dev
-    <<: *restart-policy
-    <<: *logging-config
+    <<: [*restart-policy, *logging-config]
     environment:
       ROOT_PATH: ""
       ALLOWED_HOSTS: "${ALLOWED_HOSTS:-*}"
